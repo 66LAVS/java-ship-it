@@ -9,6 +9,10 @@ public class DeliveryApp {
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Parcel> allParcels = new ArrayList<>();
     private static final List<Trackable> trackingParcels = new ArrayList<>();
+    public ParcelBox<StandardParcel> standartBox;
+    public ParcelBox<PerishableParcel> perishableBox;
+    public ParcelBox<FragileParcel> fragileBox;
+
 
     public static void main(String[] args) {
         boolean running = true;
