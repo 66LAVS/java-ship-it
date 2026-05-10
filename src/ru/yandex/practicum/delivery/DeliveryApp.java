@@ -9,9 +9,9 @@ public class DeliveryApp {
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Parcel> allParcels = new ArrayList<>();
     private static final List<Trackable> trackingParcels = new ArrayList<>();
-    public ParcelBox<StandardParcel> standartBox;
-    public ParcelBox<PerishableParcel> perishableBox;
-    public ParcelBox<FragileParcel> fragileBox;
+    public static ParcelBox<StandardParcel> standartBox;
+    public static ParcelBox<PerishableParcel> perishableBox;
+    public static ParcelBox<FragileParcel> fragileBox;
 
 
     public static void main(String[] args) {
@@ -70,6 +70,7 @@ public class DeliveryApp {
                 StandardParcel standardParcel = new StandardParcel(description, weight, deliveryAddress, sendDay);
                 allParcels.add(standardParcel);
                 System.out.println("Стандартная посылка добавлена");
+                standartBox.addParcel(standardParcel);
                 break;
             case 2:
                 System.out.println("Введите срок хранения (дней):");
@@ -77,12 +78,14 @@ public class DeliveryApp {
                 PerishableParcel perishableParcel = new PerishableParcel(description, weight, deliveryAddress, sendDay, timeToLive);
                 allParcels.add(perishableParcel);
                 System.out.println("Скоропортящаяся посылка добавлена");
+                perishableBox.addParcel(perishableParcel);
                 break;
             case 3:
                 FragileParcel fragileParcel = new FragileParcel(description, weight, deliveryAddress, sendDay);
                 allParcels.add(fragileParcel);
                 trackingParcels.add(fragileParcel);
                 System.out.println("Хрупкая посылка добавлена");
+                fragileBox.addParcel(fragileParcel);
                 break;
             default:
                 System.out.println("Введите верный номер посылки");

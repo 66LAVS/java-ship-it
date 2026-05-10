@@ -19,6 +19,7 @@ public class ParcelBox<T extends Parcel> {
             parcelBox.add(parcel);
             System.out.println("Посылка" + parcel + "добавлена в коробку!");
             maxWeight = maxWeight - parcel.getWeight();
+            System.out.println("Остаточный вес" + maxWeight);
         }
     }
 
