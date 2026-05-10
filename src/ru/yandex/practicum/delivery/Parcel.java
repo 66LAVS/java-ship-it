@@ -18,13 +18,14 @@ public abstract class Parcel {
         System.out.println("Посылка " + description + " упакована");
     }
 
-    public void deliver(){
+    public void deliver() {
         System.out.println("Посылка " + description + "доставлена по адресу " + deliveryAddress);
     }
 
     protected abstract int getDeliveryCost();
 
-    public void calculateDeliveryCost(){}
+    public void calculateDeliveryCost() {
+    }
 
     public String getDescription() {
         return description;

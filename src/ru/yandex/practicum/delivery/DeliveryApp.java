@@ -95,7 +95,7 @@ public class DeliveryApp {
 
     // Пройти по allParcels, вызвать packageItem() и deliver()
     private static void sendParcels() {
-        if (allParcels.toArray().length == 0){
+        if (allParcels.toArray().length == 0) {
             System.out.println("Список посылок пуст!");
             return;
         }
@@ -107,7 +107,7 @@ public class DeliveryApp {
 
     // Посчитать общую стоимость всех доставок и вывести на экран
     private static void calculateCosts() {
-        if (allParcels.toArray().length == 0){
+        if (allParcels.toArray().length == 0) {
             System.out.println("Список посылок пуст!");
             return;
         }
@@ -118,12 +118,12 @@ public class DeliveryApp {
         System.out.println("Общая стоимость посылок" + coast);
     }
 
-    private static void reportStatusUpdate(){
-        if (trackingParcels.toArray().length == 0){
+    private static void reportStatusUpdate() {
+        if (trackingParcels.toArray().length == 0) {
             System.out.println("Посылок с трекингом нет!");
             return;
         }
-        for(Trackable parcel : trackingParcels){
+        for (Trackable parcel : trackingParcels) {
             System.out.println("Введите адрес для посылки" + parcel);
             String newLocation = scanner.nextLine();
             parcel.reportStatus(newLocation);
