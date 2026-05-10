@@ -7,7 +7,8 @@ import java.util.Scanner;
 public class DeliveryApp {
 
     private static final Scanner scanner = new Scanner(System.in);
-    private static List<Parcel> allParcels = new ArrayList<>();
+    private static final List<Parcel> allParcels = new ArrayList<>();
+    private static final List<Trackable> trackingParcels = new ArrayList<>();
 
     public static void main(String[] args) {
         boolean running = true;
@@ -25,6 +26,9 @@ public class DeliveryApp {
                 case 3:
                     calculateCosts();
                     break;
+                case 4:
+                    reportStatusUpdate();
+                    break;
                 case 0:
                     running = false;
                     break;
@@ -39,21 +43,84 @@ public class DeliveryApp {
         System.out.println("1 — Добавить посылку");
         System.out.println("2 — Отправить все посылки");
         System.out.println("3 — Посчитать стоимость доставки");
+        System.out.println("4 — Обновить адрес доставки посылок");
         System.out.println("0 — Завершить");
     }
 
-    // реализуйте методы ниже
 
+    // Подсказка: спросите тип посылки и необходимые поля, создайте объект и добавьте в allParcels
     private static void addParcel() {
-        // Подсказка: спросите тип посылки и необходимые поля, создайте объект и добавьте в allParcels
+        System.out.println("Введите какую посылку хотите отправить:\n1 - Стандартную\n2 - Хрупкую\n3 - Скоропортящаяся");
+        int choice = Integer.parseInt(scanner.nextLine());
+        System.out.println("Введите описание послыки");
+        String description = scanner.nextLine();
+        System.out.println("Введите вес посылки");
+        int weight = Integer.parseInt(scanner.nextLine());
+        System.out.println("Введите описание посылки");
+        String deliveryAddress = scanner.nextLine();
+        System.out.println("Введите дату отправки посылки");
+        int sendDay = Integer.parseInt(scanner.nextLine());
+
+        switch (choice) {
+            case 1:
+                StandardParcel standardParcel = new StandardParcel(description, weight, deliveryAddress, sendDay);
+                allParcels.add(standardParcel);
+                System.out.println("Стандартная посылка добавлена");
+                break;
+            case 2:
+                System.out.println("Введите срок хранения (дней):");
+                int timeToLive = Integer.parseInt(scanner.nextLine());
+                PerishableParcel perishableParcel = new PerishableParcel(description, weight, deliveryAddress, sendDay, timeToLive);
+                allParcels.add(perishableParcel);
+                System.out.println("Скоропортящаяся посылка добавлена");
+                break;
+            case 3:
+                FragileParcel fragileParcel = new FragileParcel(description, weight, deliveryAddress, sendDay);
+                allParcels.add(fragileParcel);
+                trackingParcels.add(fragileParcel);
+                System.out.println("Хрупкая посылка добавлена");
+                break;
+            default:
+                System.out.println("Введите верный номер посылки");
+
+        }
     }
 
+    // Пройти по allParcels, вызвать packageItem() и deliver()
     private static void sendParcels() {
-        // Пройти по allParcels, вызвать packageItem() и deliver()
+        if (allParcels.toArray().length == 0){
+            System.out.println("Список посылок пуст!");
+            return;
+        }
+        for (Parcel parcel : allParcels) {
+            parcel.packageItem();
+            parcel.deliver();
+        }
     }
 
+    // Посчитать общую стоимость всех доставок и вывести на экран
     private static void calculateCosts() {
-        // Посчитать общую стоимость всех доставок и вывести на экран
+        if (allParcels.toArray().length == 0){
+            System.out.println("Список посылок пуст!");
+            return;
+        }
+        int coast = 0;
+        for (Parcel parcel : allParcels) {
+            coast = coast + parcel.getDeliveryCost();
+        }
+        System.out.println("Общая стоимость посылок" + coast);
+    }
+
+    private static void reportStatusUpdate(){
+        if (trackingParcels.toArray().length == 0){
+            System.out.println("Посылок с трекингом нет!");
+            return;
+        }
+        for(Trackable parcel : trackingParcels){
+            System.out.println("Введите адрес для посылки" + parcel);
+            String newLocation = scanner.nextLine();
+            parcel.reportStatus(newLocation);
+        }
     }
 
 }
