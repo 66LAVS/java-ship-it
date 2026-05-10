@@ -9,7 +9,7 @@ public class StandardParcel extends Parcel {
 
 
     @Override
-    protected int getDeliveryCost() {
+    public int getDeliveryCost() {
         return deliveryCost * getWeight();
     }
 

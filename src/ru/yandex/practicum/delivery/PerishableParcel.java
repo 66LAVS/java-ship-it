@@ -10,7 +10,7 @@ public class PerishableParcel extends Parcel{
     }
 
     @Override
-    protected int getDeliveryCost() {
+    public int getDeliveryCost() {
         return getWeight() * deliveryCost;
     }
 
