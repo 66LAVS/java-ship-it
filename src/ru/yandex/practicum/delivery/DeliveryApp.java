@@ -9,9 +9,9 @@ public class DeliveryApp {
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Parcel> allParcels = new ArrayList<>();
     private static final List<Trackable> trackingParcels = new ArrayList<>();
-    public static ParcelBox<StandardParcel> standartBox;
-    public static ParcelBox<PerishableParcel> perishableBox;
-    public static ParcelBox<FragileParcel> fragileBox;
+    public static ParcelBox<StandardParcel> standardBox = new ParcelBox<>(100);
+    public static ParcelBox<PerishableParcel> perishableBox = new ParcelBox<>(50);
+    public static ParcelBox<FragileParcel> fragileBox = new ParcelBox<>(80);
 
 
     public static void main(String[] args) {
@@ -70,7 +70,7 @@ public class DeliveryApp {
                 StandardParcel standardParcel = new StandardParcel(description, weight, deliveryAddress, sendDay);
                 allParcels.add(standardParcel);
                 System.out.println("Стандартная посылка добавлена");
-                standartBox.addParcel(standardParcel);
+                standardBox.addParcel(standardParcel);
                 break;
             case 2:
                 System.out.println("Введите срок хранения (дней):");
@@ -95,7 +95,7 @@ public class DeliveryApp {
 
     // Пройти по allParcels, вызвать packageItem() и deliver()
     private static void sendParcels() {
-        if (allParcels.toArray().length == 0) {
+        if (allParcels.isEmpty()) {
             System.out.println("Список посылок пуст!");
             return;
         }
@@ -107,15 +107,15 @@ public class DeliveryApp {
 
     // Посчитать общую стоимость всех доставок и вывести на экран
     private static void calculateCosts() {
-        if (allParcels.toArray().length == 0) {
+        if (allParcels.isEmpty()) {
             System.out.println("Список посылок пуст!");
             return;
         }
-        int coast = 0;
+        int cost = 0;
         for (Parcel parcel : allParcels) {
-            coast = coast + parcel.getDeliveryCost();
+            cost = cost + parcel.calculateDeliveryCost();
         }
-        System.out.println("Общая стоимость посылок" + coast);
+        System.out.println("Общая стоимость посылок" + cost);
     }
 
     private static void reportStatusUpdate() {
